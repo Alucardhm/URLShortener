@@ -6,7 +6,8 @@ if(process.env.NODE_ENV !== "production"){ // usar a database local apenas se es
 const express = require('express')
 const mongoose = require('mongoose');
 const ShortUrl = require('./models/shortUrl')
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
+const shortUrl = require('./models/shortUrl');
 
 const app = express()
 
@@ -41,7 +42,7 @@ app.get('/:shortUrl', async(req,res) => {
 
 app.delete('/:shortUrl', async(req,res) => {
     try {
-        await ShortUrl.findOne({short: req.params.shortUrl}).deleteOne()
+        await ShortUrl.findOneAndDelete({short: req.params.shortUrl})
         res.redirect('/')
     } catch (error) {
         console.log(error)
